@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OD_Stat", "OD_Stat\OD_Stat.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{B6B6CD9A-EA51-4521-936C-EB398C05EB6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{B3D48460-A08C-4B2F-86AB-22263A187F24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{B6B6CD9A-EA51-4521-936C-EB398C05EB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6B6CD9A-EA51-4521-936C-EB398C05EB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6B6CD9A-EA51-4521-936C-EB398C05EB6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3D48460-A08C-4B2F-86AB-22263A187F24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3D48460-A08C-4B2F-86AB-22263A187F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3D48460-A08C-4B2F-86AB-22263A187F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3D48460-A08C-4B2F-86AB-22263A187F24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

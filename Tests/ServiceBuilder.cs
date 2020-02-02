@@ -26,8 +26,7 @@ namespace Tests
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
-                    services.AddTransient<TestService>();
-                    services.AddTransient<InlineService>();
+                    TestDiMapper.Map(services);
                 });
     }
 }
