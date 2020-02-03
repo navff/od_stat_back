@@ -20,7 +20,7 @@ namespace OD_Stat.Modules.Geo
             var country =  await _context.Countries.FindAsync(id);
             if (country == null)
             {
-                throw new EntityNotFoundException(typeof(Country), id.ToString());
+                throw new EntityNotFoundException<Country>(id.ToString());
             }
 
             return country;
