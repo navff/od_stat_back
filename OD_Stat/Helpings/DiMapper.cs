@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Geo;
@@ -10,6 +12,7 @@ namespace OD_Stat.Helpings
         public static void Map(IServiceCollection services)
         {
             // SERVICES
+            AutoMapperConigBuilder.RegisterAutoMapper(services, new MappingProfile());
 
             // REPOSITORIES
             
@@ -21,6 +24,9 @@ namespace OD_Stat.Helpings
             services.AddDbContext<OdContext>(opt => 
                 opt.UseInMemoryDatabase("ODStat"));
             services.AddTransient<IUnitOfWork, UnitOfWork>();    
+            
+            
         }
+        
     }
 }

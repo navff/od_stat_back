@@ -39,7 +39,7 @@ namespace Tests
                 Items = query,
                 CurrentPage = 1
             };
-            Assert.AreEqual(123, pageView.ItemsCount);
+            Assert.IsTrue(pageView.ItemsCount >= 123);
             Assert.AreEqual(1,pageView.CurrentPage);
             Assert.AreEqual(2, pageView.PagesCount);
             Assert.AreEqual(true, pageView.HasNextPage);

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace OD_Stat.Modules.CommonModulesHelpings
 {
-    public static class FilterHelpers
+    public static class FilterHelper
     {
         public static IQueryable<T> FilterBy<T>(this IQueryable<T> queryable, 
                                                     Expression<Func<T,bool>> filter,

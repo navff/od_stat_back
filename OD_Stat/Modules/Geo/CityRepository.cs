@@ -5,7 +5,7 @@ using OD_Stat.Modules.CommonModulesHelpings;
 
 namespace OD_Stat.Modules.Geo
 {
-    class CityRepository : AbstractRepo, ICityRepository
+    public class CityRepository : AbstractRepo, ICityRepository
     {
         private OdContext _context { get; set; }
         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Common;
 using Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +11,13 @@ using OD_Stat.Modules.CommonModulesHelpings;
 
 namespace OD_Stat.Modules.Geo
 {
-    class CountryRepository : AbstractRepo, ICountryRepository
+    public class CountryRepository : AbstractRepo, ICountryRepository
     {
+        private readonly IMapper _mapper;
         private OdContext _context { get; set; }
-        public CountryRepository(OdContext context) : base(context)
+        public CountryRepository(OdContext context, IMapper mapper) : base(context)
         {
+            _mapper = mapper;
             _context = context;
         }
         
@@ -25,23 +28,29 @@ namespace OD_Stat.Modules.Geo
             {
                 throw new EntityNotFoundException<Country>(id.ToString());
             }
-
             return country;
         }
 
-        public Task<Country> Add(Country country)
+        public async Task<Country> Add(Country country)
         {
-            throw new System.NotImplementedException();
+            await _context.Countries.AddAsync(country);
+            return country;
         }
 
-        public Task<Country> Update(Country country)
+        public async Task<Country> Update(Country country)
         {
-            throw new System.NotImplementedException();
+            var dbCountry = await GetById(country.Id);
+            dbCountry =  _mapper.Map<Country>(country);
+            dbCountry.Id = country.Id;
+            await _context.SaveChangesAsync();
+            return dbCountry;
         }
 
-        public Task Delete(int Id)
+        public async Task Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var dbCountry = await GetById(id);
+            _context.Countries.Remove(dbCountry);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<PageView<Country>> Search(string? code = null, 
@@ -65,9 +74,5 @@ namespace OD_Stat.Modules.Geo
             };
             return pageView;
         }
-
-        
-
-
     }
 }
