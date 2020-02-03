@@ -14,7 +14,7 @@ namespace Tests
         [TestMethod]
         public void TestServiceBuilder()
         {
-            var testService = _serviceBuilder.GetService<TestService>();
+            var testService = DiServiceBuilder.GetService<TestService>();
             var result = testService.Invoke();
             Assert.IsTrue(result == "This is string");
         }

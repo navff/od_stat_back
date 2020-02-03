@@ -12,7 +12,7 @@ namespace Tests.RepoTests
 
         public CityRepositoryTest()
         {
-            _unitOfWork = _serviceBuilder.GetService<IUnitOfWork>();
+            _unitOfWork = DiServiceBuilder.GetService<IUnitOfWork>();
         }
 
         private async Task<City> CreateCity()

@@ -13,7 +13,7 @@ namespace Tests
         private OdContext _context;
         public FilterTest()
         {
-            _context = _serviceBuilder.GetService<OdContext>();
+            _context = DiServiceBuilder.GetService<OdContext>();
         }
 
         private void PrepareData(int count)

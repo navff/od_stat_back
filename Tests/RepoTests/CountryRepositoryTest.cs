@@ -5,6 +5,7 @@ using Common.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Geo;
+using Tests.DemoData;
 
 namespace Tests.RepoTests
 {
@@ -13,46 +14,18 @@ namespace Tests.RepoTests
     {
         private IUnitOfWork _unitOfWork;
         private OdContext _context;
+        private Creators _creators;
         public CountryRepositoryTest()
         {
-            _unitOfWork = _serviceBuilder.GetService<IUnitOfWork>();
-            _context = _serviceBuilder.GetService<OdContext>();
-        }
-
-        private async Task<IEnumerable<Country>> CreateCountries(int count=100)
-        {
-            var countries = new List<Country>();
-            for (int i = 0; i < count; i++)
-            {
-                countries.Add(new Country
-                {
-                    Code = "cntr",
-                    Name = "TestCountry"
-                });
-            }
-
-            await _context.Countries.AddRangeAsync(countries);
-            await _context.SaveChangesAsync();
-            return countries;
-        }
-        
-        private async Task<Country> CreateCountry()
-        {
-                var country = new Country
-                {
-                    Code = "cntr",
-                    Name = "TestCountry"
-                };
-            
-            await _context.Countries.AddAsync(country);
-            await _context.SaveChangesAsync();
-            return country;
+            _unitOfWork = DiServiceBuilder.GetService<IUnitOfWork>();
+            _context = DiServiceBuilder.GetService<OdContext>();
+            _creators = new Creators();
         }
         
         [TestMethod]
         public async Task GetById_Ok_Test()
         {
-            var country = await CreateCountry();
+            var country = await _creators.CountryCreator.CreateCountry();
             var result = await _unitOfWork.CountryRepository
                 .GetById(country.Id);
             Assert.AreEqual("cntr", result.Code);
@@ -70,7 +43,7 @@ namespace Tests.RepoTests
         [TestMethod]
         public async Task Search_Ok_Test()
         {
-            var countries = await CreateCountries(10);
+            var countries = await _creators.CountryCreator.CreateCountries(10);
             var result = await _unitOfWork.CountryRepository.Search(
                     code: "cntr",
                     name: "test"
@@ -83,7 +56,7 @@ namespace Tests.RepoTests
         [TestMethod]
         public async Task Search_NotFound_Test()
         {
-            var countries = await CreateCountries(10);
+            var countries = await _creators.CountryCreator.CreateCountries(10);
             var result = await _unitOfWork.CountryRepository.Search(
                 code: "kjadfkahsdfkjhaskdsjfhkajsdfh"
             );
@@ -93,7 +66,7 @@ namespace Tests.RepoTests
         [TestMethod]
         public async Task Update_Ok_Test()
         {
-            var country = await CreateCountry();
+            var country = await _creators.CountryCreator.CreateCountry();
             var updated = await _unitOfWork.CountryRepository
                 .Update(new Country
                 {
@@ -107,9 +80,13 @@ namespace Tests.RepoTests
             Assert.AreEqual("Jopa with hands", updated.Name);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(EntityNotFoundException<Country>))]
         public async Task Delete_Ok_Test()
         {
-            throw new System.NotImplementedException();
+            var country = await _creators.CountryCreator.CreateCountry();
+            await _unitOfWork.CountryRepository.Delete(country.Id);
+            await _unitOfWork.CountryRepository.GetById(country.Id);
         }
     }
 }

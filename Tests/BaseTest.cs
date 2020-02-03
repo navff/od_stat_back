@@ -2,6 +2,6 @@
 {
     public class BaseTest
     {
-        protected readonly ServiceBuilder _serviceBuilder = new ServiceBuilder();
+        protected readonly DIServiceBuilder DiServiceBuilder = new DIServiceBuilder();
     }
 }

@@ -5,11 +5,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace Tests
 {
-    public class ServiceBuilder
+    public class DIServiceBuilder
     {
         private IServiceProvider  ServiceProvider { get; set; }
 
-        public ServiceBuilder()
+        public DIServiceBuilder()
         {
             string[] args = new string[0]; 
             var host = CreateHostBuilder(args).Build();
