@@ -13,12 +13,10 @@ namespace Tests.RepoTests
     public class CountryRepositoryTest : BaseTest, IRepoTest
     {
         private IUnitOfWork _unitOfWork;
-        private OdContext _context;
         private Creators _creators;
         public CountryRepositoryTest()
         {
             _unitOfWork = DiServiceBuilder.GetService<IUnitOfWork>();
-            _context = DiServiceBuilder.GetService<OdContext>();
             _creators = new Creators();
         }
         
@@ -34,10 +32,11 @@ namespace Tests.RepoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EntityNotFoundException<Country>))]
         public async Task GetById_WrongId_Test()
         {
-            await _unitOfWork.CountryRepository.GetById(123545687);
+            await Assert.ThrowsExceptionAsync<EntityNotFoundException<Country>>(async () => 
+                    await _unitOfWork.CountryRepository.GetById(123545687)
+            );
         }
 
         [TestMethod]
@@ -81,12 +80,13 @@ namespace Tests.RepoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EntityNotFoundException<Country>))]
         public async Task Delete_Ok_Test()
         {
             var country = await _creators.CountryCreator.CreateCountry();
             await _unitOfWork.CountryRepository.Delete(country.Id);
-            await _unitOfWork.CountryRepository.GetById(country.Id);
+            await Assert.ThrowsExceptionAsync<EntityNotFoundException<Country>>(async () => 
+                await _unitOfWork.CountryRepository.GetById(country.Id)    
+            );
         }
     }
 }
