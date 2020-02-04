@@ -7,6 +7,7 @@ namespace Tests.RepoTests
         public Task GetById_Ok_Test();
         public Task GetById_WrongId_Test();
         public Task Search_Ok_Test();
+        public Task Add_Ok_Test();
         public Task Search_NotFound_Test();
         public Task Update_Ok_Test();
         public Task Delete_Ok_Test();

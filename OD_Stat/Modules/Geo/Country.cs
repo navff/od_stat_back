@@ -10,17 +10,11 @@ namespace OD_Stat.Modules.Geo
         public int Id { get; set; }
         
         [Required]
+        [MinLength(2), MaxLength(200)]
         public string Name { get; set; }
         
         [Required]
         public string Code { get; set; }
-
-        /// <summary>
-        /// Генерирует код автоматически и устанавливает его в поле Code
-        /// </summary>
-        public void SetAutoCode()
-        {
-            throw new NotImplementedException(); 
-        }
+        
     }
 }

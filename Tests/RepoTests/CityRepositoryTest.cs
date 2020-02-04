@@ -52,6 +52,16 @@ namespace Tests.RepoTests
             throw new System.NotImplementedException();
         }
 
+        public Task Add_Ok_Test()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task Add_WrongObjectTest()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task Search_NotFound_Test()
         {
             throw new System.NotImplementedException();

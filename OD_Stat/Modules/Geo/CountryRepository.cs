@@ -34,6 +34,7 @@ namespace OD_Stat.Modules.Geo
         public async Task<Country> Add(Country country)
         {
             await _context.Countries.AddAsync(country);
+            await _context.SaveChangesAsync();
             return country;
         }
 
@@ -53,24 +54,23 @@ namespace OD_Stat.Modules.Geo
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageView<Country>> Search(string? code = null, 
-                                                    string? name = null, 
-                                                    int? page = 1,
-                                                    int? take = 100)
+        public async Task<PageView<Country>> Search(CountrySearchParams searchParams)
         {
-            int skipCount = (page.Value - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
+            int skipCount = (searchParams.Page - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
             
             IQueryable<Country> query = _context.Countries.AsQueryable();
-            query = query.FilterBy(c => c.Code.ToLower().Contains(code.ToLower()), code)
-                .FilterBy(c => c.Name.ToLower().Contains(name.ToLower()), name)
+            query = query.FilterBy(c => c.Code.ToLower()
+                                    .Contains(searchParams.Code.ToLower()), searchParams.Code)
+                .FilterBy(c => c.Name.ToLower()
+                    .Contains(searchParams.Name.ToLower()), searchParams.Name)
                 .Skip(skipCount)
-                .Take(HARDCODED_SETTINGS.ITEMS_PER_PAGE)
+                .Take(searchParams.Take)
                 .OrderBy(c => c.Name);
             
             var pageView = new PageView<Country>
             {
                 Items = await query.ToListAsync(),
-                CurrentPage = page.Value
+                CurrentPage = searchParams.Page
             };
             return pageView;
         }

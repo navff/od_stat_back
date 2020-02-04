@@ -13,12 +13,5 @@ namespace OD_Stat.Modules.Geo
         public int CountryId { get; set; }
         public virtual Country Country { get; set; }
         
-        /// <summary>
-        /// Автоматически генерирует код на основании имени
-        /// </summary>
-        public void SetAutoCode()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

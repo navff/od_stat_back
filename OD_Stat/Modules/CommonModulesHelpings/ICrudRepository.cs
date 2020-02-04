@@ -11,6 +11,5 @@ namespace OD_Stat.Modules.CommonModulesHelpings
         Task<T> Add(T country);
         Task<T> Update(T country);
         Task Delete(int Id);
-        Task<PageView<T>> Search(string? code=null, string? name=null, int? page=1, int? take=100);
     }
 }
