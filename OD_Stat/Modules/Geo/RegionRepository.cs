@@ -34,11 +34,11 @@ namespace OD_Stat.Modules.Geo
             return region;
         }
 
-        public async Task<Region> Update(Region region)
+        public async Task<Region> Update(Region city)
         {
             // var regionFromDb = await GetById(region.Id);
-            var regionFromDb = _mapper.Map<Region>(region);
-            regionFromDb.Id = region.Id;
+            var regionFromDb = _mapper.Map<Region>(city);
+            regionFromDb.Id = city.Id;
             _context.Attach(regionFromDb);
             await _context.SaveChangesAsync();
             return regionFromDb;

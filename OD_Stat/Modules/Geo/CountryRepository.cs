@@ -38,11 +38,11 @@ namespace OD_Stat.Modules.Geo
             return country;
         }
 
-        public async Task<Country> Update(Country country)
+        public async Task<Country> Update(Country city)
         {
-            var dbCountry = await GetById(country.Id);
-            dbCountry =  _mapper.Map<Country>(country);
-            dbCountry.Id = country.Id;
+            var dbCountry = await GetById(city.Id);
+            dbCountry =  _mapper.Map<Country>(city);
+            dbCountry.Id = city.Id;
             await _context.SaveChangesAsync();
             return dbCountry;
         }
@@ -63,9 +63,9 @@ namespace OD_Stat.Modules.Geo
                                     .Contains(searchParams.Code.ToLower()), searchParams.Code)
                 .FilterBy(c => c.Name.ToLower()
                     .Contains(searchParams.Name.ToLower()), searchParams.Name)
+                .OrderBy(c => c.Name)
                 .Skip(skipCount)
-                .Take(searchParams.Take)
-                .OrderBy(c => c.Name);
+                .Take(searchParams.Take);
             
             var pageView = new PageView<Country>
             {

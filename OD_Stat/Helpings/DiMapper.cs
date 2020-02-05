@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using OD_Stat.Modules.Geo;
 
 namespace OD_Stat.Helpings
 {
+    [ExcludeFromCodeCoverage]
     public static class DiMapper
     {
         public static void Map(IServiceCollection services)

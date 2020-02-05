@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Common.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Geo;
+using Tests.DemoData;
 
 namespace Tests.RepoTests
 {
@@ -9,72 +12,96 @@ namespace Tests.RepoTests
     public class CityRepositoryTest : BaseTest, IRepoTest
     {
         private IUnitOfWork _unitOfWork;
+        private Creators _creators;
 
         public CityRepositoryTest()
         {
             _unitOfWork = DiServiceBuilder.GetService<IUnitOfWork>();
+            _creators = new Creators();
         }
 
-        private async Task<City> CreateCity()
-        {
-            return await _unitOfWork.CityRepository.Add(new City
-            {
-                Name = "TestCity",
-                Region = new Region
-                {
-                    Code = "code",
-                    Name = "TestRegion",
-                    Country = new Country
-                    {
-                        Code = "cc",
-                        Name = "Test Country"
-                    }
-                }
-            });
-        }
-        
+        [TestMethod]
         public async Task GetById_Ok_Test()
         {
-            var city = await CreateCity();
+            var city = await _creators.CityCreator.CreateOne();
             var result = await _unitOfWork.CityRepository.GetById(city.Id);
             Assert.AreEqual(result.Id, city.Id);
             Assert.AreEqual(result.Name, city.Name);
             Assert.AreEqual(result.Region.Name, city.Region.Name);
         }
 
-        public Task GetById_WrongId_Test()
+        [TestMethod]
+        public async Task GetById_WrongId_Test()
         {
-            throw new System.NotImplementedException();
+            await Assert.ThrowsExceptionAsync<EntityNotFoundException<City>>(async () => 
+                await _unitOfWork.CityRepository.GetById(999999999)
+            );
         }
 
-        public Task Search_Ok_Test()
+        [TestMethod]
+        public async Task Search_Ok_Test()
         {
-            throw new System.NotImplementedException();
+            var cities = await _creators.CityCreator.CreateMany(30);
+            var firstCity = cities.First();
+            var result = await _unitOfWork.CityRepository.Search(new CitySearchParams
+            {
+                Name = firstCity.Name,
+                RegionId = firstCity.RegionId,
+                Page = 1,
+                Take = 11
+            });
+            
+            Assert.IsFalse(result.HasNextPage);
+            Assert.IsFalse(result.HasPreviousPage);
+            Assert.AreEqual(firstCity.Name, result.Items.First().Name);
+
         }
 
-        public Task Add_Ok_Test()
+        [TestMethod]
+        public async Task Add_Ok_Test()
         {
-            throw new System.NotImplementedException();
+            var city = CityCreator.NewCity();
+            var result = await _unitOfWork.CityRepository.Add(city);
+            Assert.IsTrue(result.Id != 0);
+            Assert.AreEqual(city.Name, result.Name);
+            Assert.IsTrue(result.Region.Id != 0);
         }
 
-        public Task Add_WrongObjectTest()
+        [TestMethod]
+        public async Task Search_NotFound_Test()
         {
-            throw new System.NotImplementedException();
+            await _creators.CityCreator.CreateMany(30);
+            var result = await _unitOfWork.CityRepository.Search(new CitySearchParams
+            {
+                Name = "abrvalg"
+            });
+            Assert.IsFalse(result.Items.Any());
+            Assert.IsFalse(result.HasNextPage);
+            Assert.IsFalse(result.HasPreviousPage);
+            Assert.IsTrue(result.ItemsCount == 0);
         }
 
-        public Task Search_NotFound_Test()
+        [TestMethod]
+        public async Task Update_Ok_Test()
         {
-            throw new System.NotImplementedException();
+            var city = await _creators.CityCreator.CreateOne();
+            var result = await _unitOfWork.CityRepository.Update(new City
+            {
+                Name = "updated_name",
+                Id = city.Id
+            });
+            Assert.AreEqual(city.Id, result.Id);
+            Assert.AreEqual("updated_name", result.Name);
         }
 
-        public Task Update_Ok_Test()
+        [TestMethod]
+        public async Task Delete_Ok_Test()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Delete_Ok_Test()
-        {
-            throw new System.NotImplementedException();
+            var city = await _creators.CityCreator.CreateOne();
+            await _unitOfWork.CityRepository.Delete(city.Id);
+            await Assert.ThrowsExceptionAsync<EntityNotFoundException<City>>(async () => 
+                await _unitOfWork.CityRepository.GetById(city.Id)
+            );
         }
     }
 }

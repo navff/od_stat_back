@@ -8,8 +8,8 @@ namespace OD_Stat.Modules.CommonModulesHelpings
     {
         
         Task<T> GetById(int id);
-        Task<T> Add(T country);
-        Task<T> Update(T country);
-        Task Delete(int Id);
+        Task<T> Add(T entity);
+        Task<T> Update(T city);
+        Task Delete(int id);
     }
 }

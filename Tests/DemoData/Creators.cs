@@ -7,6 +7,7 @@ namespace Tests.DemoData
     {
         public CountryCreator CountryCreator { get; }
         public RegionCreator RegionCreator { get; }
+        public CityCreator CityCreator { get; }
 
         public Creators()
         {
@@ -14,6 +15,7 @@ namespace Tests.DemoData
             var context = builder.GetService<OdContext>(); 
             CountryCreator = new CountryCreator(context);
             RegionCreator = new RegionCreator(context);
+            CityCreator = new CityCreator(context);
         }
     }
 }

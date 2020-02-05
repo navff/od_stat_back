@@ -16,7 +16,7 @@ namespace OD_Stat.DataAccess
             _mapper = mapper;
             CountryRepository = new CountryRepository(context, _mapper);
             RegionRepository = new RegionRepository(context, _mapper);
-            CityRepository = new CityRepository(context);
+            CityRepository = new CityRepository(context, _mapper);
         }
     }
 }
