@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Common;
 using OD_Stat.DataAccess;
 
 namespace OD_Stat.Modules.Geo.Cities
@@ -30,6 +31,11 @@ namespace OD_Stat.Modules.Geo.Cities
         public async Task Delete(int id)
         {
             await _unitOfWork.CityRepository.Delete(id);
+        }
+
+        public async Task<PageView<City>> Search(CitySearchParams searchParams)
+        {
+            return await _unitOfWork.CityRepository.Search(searchParams);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace OD_Stat.DataAccess
         public OdContext(DbContextOptions<OdContext> options)
             : base(options)
         {
-            Database.EnsureCreated();   // создаем базу данных при первом обращении
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

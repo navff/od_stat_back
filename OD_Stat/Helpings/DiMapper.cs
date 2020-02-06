@@ -26,7 +26,7 @@ namespace OD_Stat.Helpings
             
             // OTHERS
             services.AddDbContext<OdContext>(opt => 
-                opt.UseInMemoryDatabase("ODStat"));
+                opt.UseSqlite("Data Source=od_stat.db"));
             services.AddTransient<IUnitOfWork, UnitOfWork>();    
             
             

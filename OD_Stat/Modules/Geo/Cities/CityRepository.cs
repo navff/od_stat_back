@@ -55,7 +55,7 @@ namespace OD_Stat.Modules.Geo.Cities
         {
             int skipCount = (searchParams.Page - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
 
-            var query = _context.Cities.AsQueryable();
+            var query = _context.Cities.Include(c => c.Region).AsQueryable();
             query = query.FilterBy(c => c.Name.ToLower()
                     .Contains(searchParams.Name.ToLower()), searchParams.Name)
                 .FilterBy(c => c.RegionId == searchParams.RegionId, searchParams.RegionId)
