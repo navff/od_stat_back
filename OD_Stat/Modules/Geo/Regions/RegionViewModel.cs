@@ -1,4 +1,4 @@
-﻿namespace OD_Stat.Modules.Geo
+﻿namespace OD_Stat.Modules.Geo.Regions
 {
     public class RegionViewModel
     {

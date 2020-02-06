@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common;
@@ -9,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.CommonModulesHelpings;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Countries
 {
     public class CountryRepository : AbstractRepo, ICountryRepository
     {
@@ -21,27 +19,27 @@ namespace OD_Stat.Modules.Geo
             _context = context;
         }
         
-        public async Task<Country> GetById(int id)
+        public async Task<Countries.Country> GetById(int id)
         {
             var country =  await _context.Countries.FindAsync(id);
             if (country == null)
             {
-                throw new EntityNotFoundException<Country>(id.ToString());
+                throw new EntityNotFoundException<Countries.Country>(id.ToString());
             }
             return country;
         }
 
-        public async Task<Country> Add(Country country)
+        public async Task<Countries.Country> Add(Countries.Country country)
         {
             await _context.Countries.AddAsync(country);
             await _context.SaveChangesAsync();
             return country;
         }
 
-        public async Task<Country> Update(Country city)
+        public async Task<Countries.Country> Update(Countries.Country city)
         {
             var dbCountry = await GetById(city.Id);
-            dbCountry =  _mapper.Map<Country>(city);
+            dbCountry =  _mapper.Map<Countries.Country>(city);
             dbCountry.Id = city.Id;
             await _context.SaveChangesAsync();
             return dbCountry;
@@ -54,11 +52,11 @@ namespace OD_Stat.Modules.Geo
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageView<Country>> Search(CountrySearchParams searchParams)
+        public async Task<PageView<Countries.Country>> Search(CountrySearchParams searchParams)
         {
             int skipCount = (searchParams.Page - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
             
-            IQueryable<Country> query = _context.Countries.AsQueryable();
+            IQueryable<Countries.Country> query = _context.Countries.AsQueryable();
             query = query.FilterBy(c => c.Code.ToLower()
                                     .Contains(searchParams.Code.ToLower()), searchParams.Code)
                 .FilterBy(c => c.Name.ToLower()
@@ -67,7 +65,7 @@ namespace OD_Stat.Modules.Geo
                 .Skip(skipCount)
                 .Take(searchParams.Take);
             
-            var pageView = new PageView<Country>
+            var pageView = new PageView<Countries.Country>
             {
                 Items = await query.ToListAsync(),
                 CurrentPage = searchParams.Page

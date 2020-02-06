@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.CommonModulesHelpings;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Regions
 {
     class RegionRepository : AbstractRepo, IRegionRepository
     {
@@ -19,25 +19,24 @@ namespace OD_Stat.Modules.Geo
             _mapper = mapper;
         }
         
-        public async Task<Region> GetById(int id)
+        public async Task<Regions.Region> GetById(int id)
         {
             var region = await _context.Regions.Include(r => r.Country)
                 .FirstOrDefaultAsync(r => r.Id == id);
-            if (region == null) throw new EntityNotFoundException<Region>(id.ToString());
+            if (region == null) throw new EntityNotFoundException<Regions.Region>(id.ToString());
             return region;
         }
 
-        public async Task<Region> Add(Region region)
+        public async Task<Regions.Region> Add(Regions.Region region)
         {
             _context.Regions.Add(region);
             await _context.SaveChangesAsync();
             return region;
         }
 
-        public async Task<Region> Update(Region city)
+        public async Task<Regions.Region> Update(Regions.Region city)
         {
-            // var regionFromDb = await GetById(region.Id);
-            var regionFromDb = _mapper.Map<Region>(city);
+            var regionFromDb = _mapper.Map<Regions.Region>(city);
             regionFromDb.Id = city.Id;
             _context.Attach(regionFromDb);
             await _context.SaveChangesAsync();
@@ -51,7 +50,7 @@ namespace OD_Stat.Modules.Geo
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageView<Region>> Search(RegionSearchParams searchParams)
+        public async Task<PageView<Regions.Region>> Search(RegionSearchParams searchParams)
         {
             var skip = HARDCODED_SETTINGS.ITEMS_PER_PAGE * (searchParams.Page - 1);
             var query = _context.Regions.AsQueryable();
@@ -62,7 +61,7 @@ namespace OD_Stat.Modules.Geo
                 .Skip(skip)
                 .Take(searchParams.Take);
                 ;
-            return new PageView<Region>
+            return new PageView<Regions.Region>
             {
                 Items = await  query.ToListAsync(),
                 CurrentPage = searchParams.Page

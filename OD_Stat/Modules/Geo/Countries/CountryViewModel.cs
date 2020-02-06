@@ -1,6 +1,6 @@
-﻿namespace OD_Stat.Modules.Geo
+﻿namespace OD_Stat.Modules.Geo.Countries
 {
-    public class CountryViewModel
+    public abstract class CountryViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

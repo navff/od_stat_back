@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Countries
 {
     public class Country
     {

@@ -2,9 +2,9 @@
 using Common;
 using OD_Stat.Modules.CommonModulesHelpings;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Regions
 {
-    public interface IRegionRepository : ICrudRepository<Region>
+    public interface IRegionRepository : ICrudOperations<Region>
     {
         Task<PageView<Region>> Search(RegionSearchParams searchParams);
     }

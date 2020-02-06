@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.CommonModulesHelpings;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Cities
 {
     public class CityRepository : AbstractRepo, ICityRepository
     {

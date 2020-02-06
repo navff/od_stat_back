@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Regions
 {
     public class Region
     {
@@ -11,7 +10,7 @@ namespace OD_Stat.Modules.Geo
         
         [ForeignKey("Country")]
         public int CountryId { get; set; }
-        public virtual Country Country { get; set; }
+        public virtual Countries.Country Country { get; set; }
         
     }
 }

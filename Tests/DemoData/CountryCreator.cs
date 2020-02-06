@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Geo;
+using OD_Stat.Modules.Geo.Countries;
 
 namespace Tests.DemoData
 {

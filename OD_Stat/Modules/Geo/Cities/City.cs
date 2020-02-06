@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OD_Stat.Modules.Geo.Regions;
 
-namespace OD_Stat.Modules.Geo
+namespace OD_Stat.Modules.Geo.Cities
 {
     public class City
     {
@@ -13,5 +14,6 @@ namespace OD_Stat.Modules.Geo
         [Required] [ForeignKey("Region")] 
         public int RegionId { get; set; }
         public virtual Region Region { get; set; } = null!;
+        
     }
 }

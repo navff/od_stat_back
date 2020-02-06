@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OD_Stat.Modules.Geo;
+using OD_Stat.Modules.Geo.Countries;
 
 namespace OD_Stat.Helpings
 {

@@ -4,6 +4,7 @@ using Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Geo;
+using OD_Stat.Modules.Geo.Countries;
 
 namespace Tests
 {

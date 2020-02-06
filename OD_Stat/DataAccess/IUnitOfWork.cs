@@ -1,4 +1,6 @@
-﻿using OD_Stat.Modules.Geo;
+﻿using OD_Stat.Modules.Geo.Cities;
+using OD_Stat.Modules.Geo.Countries;
+using OD_Stat.Modules.Geo.Regions;
 
 namespace OD_Stat.DataAccess
 {

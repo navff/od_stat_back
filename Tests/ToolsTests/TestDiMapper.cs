@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OD_Stat.DataAccess;
 using OD_Stat.Helpings;
 using OD_Stat.Modules.Geo;
+using OD_Stat.Modules.Geo.Cities;
+using OD_Stat.Modules.Geo.Countries;
 
 namespace Tests
 {
@@ -14,6 +16,7 @@ namespace Tests
             // SERVICES
             services.AddTransient<TestService>();
             services.AddTransient<InlineService>();
+            services.AddTransient<ICityService, CityService>();
             
             // REPOSITORIES
             services.AddTransient<IUnitOfWork, UnitOfWork>();    
@@ -21,7 +24,7 @@ namespace Tests
             services.AddTransient<CountryRepository>();
             
             // CONTROLLERS
-            services.AddTransient<GeoController>();
+            services.AddTransient<CityController>();
             
             // OTHERS
             services.AddDbContext<OdContext>(opt => 

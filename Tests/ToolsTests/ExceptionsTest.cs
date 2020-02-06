@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Common.Exceptions;
 using OD_Stat.Modules.Geo;
+using OD_Stat.Modules.Geo.Cities;
 
 namespace Tests
 {
