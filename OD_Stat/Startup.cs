@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OD_Stat.DataAccess;
 using OD_Stat.Helpings;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace OD_Stat
 {
@@ -41,12 +44,21 @@ namespace OD_Stat
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "OD Api V1");
+                c.RoutePrefix = string.Empty;
+                c.EnableDeepLinking();
+            });
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            
         }
     }
 }
