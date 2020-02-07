@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common;
 using Common.Exceptions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OD_Stat.Modules.Geo.Countries;
 
 namespace OD_Stat.Modules.Geo.Cities
 {
@@ -25,7 +22,7 @@ namespace OD_Stat.Modules.Geo.Cities
         }
 
         /// <summary>
-        /// Получает город по его Id.
+        /// Получить город по его Id.
         /// </summary>
         /// <param name="id"></param>
         /// <response code="200">Отдаёт город</response>
@@ -39,7 +36,7 @@ namespace OD_Stat.Modules.Geo.Cities
             {
                 city = await _cityService.GetById(id);
             }
-            catch (EntityNotFoundException<City> e)
+            catch (EntityNotFoundException<City>)
             {
                 return this.NotFound($"There is no City with id={id}");
             }
@@ -55,7 +52,7 @@ namespace OD_Stat.Modules.Geo.Cities
         }
 
         /// <summary>
-        /// Ищет город по параметрами
+        /// Найти город по параметрам
         /// </summary>
         ///  <response code="200">Список городов, обёрнутый в PageView</response>
         [Route("search")]
@@ -77,13 +74,45 @@ namespace OD_Stat.Modules.Geo.Cities
             };
         }
 
+        /// <summary>
+        /// Добавить город
+        /// </summary>
+        ///  <response code="200">Только что доабленный город</response>
         [HttpPost]
-        [ProducesResponseType(typeof(CityViewModelGet), 201)]
+        [ProducesResponseType(typeof(CityViewModelGet), 200)]
         public async Task<ObjectResult> Add(CityViewModelPost viewModel)
         {
             var city = _mapper.Map<City>(viewModel);
             await _cityService.Add(city);
             return await Get(city.Id);
+        }
+
+        /// <summary>
+        /// Изменить город
+        /// </summary>
+        /// <response code="200">Список городов, обёрнутый в PageView</response>
+        /// <response code="404">Не найден город с таким Id</response>
+        [HttpPut]
+        [ProducesResponseType(typeof(CityViewModelGet), 200)]
+        [Route("{id}")]
+        public async Task<ObjectResult> Update([FromRoute]int id, 
+                                               [FromBody]CityViewModelPost viewModel)
+        {
+            City result;
+            try
+            {
+                result = await _cityService.Update(new City
+                {
+                    Id = id,
+                    Name = viewModel.Name,
+                    RegionId = viewModel.RegionId
+                });
+            }
+            catch (EntityNotFoundException<City>)
+            {
+                return NotFound($"There is no City with ID = {id}");
+            }
+            return await Get(result.Id);
         }
     }
 }

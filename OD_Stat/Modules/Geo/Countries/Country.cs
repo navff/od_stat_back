@@ -13,6 +13,12 @@ namespace OD_Stat.Modules.Geo.Countries
         
         [Required]
         public string Code { get; set; }
-        
+
+
+        public void CloneToSelf(Country country)
+        {
+            this.Code = country.Code;
+            this.Name = country.Name;
+        }
     }
 }

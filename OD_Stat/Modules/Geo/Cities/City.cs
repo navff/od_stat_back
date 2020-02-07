@@ -14,6 +14,12 @@ namespace OD_Stat.Modules.Geo.Cities
         [Required] [ForeignKey("Region")] 
         public int RegionId { get; set; }
         public virtual Region Region { get; set; } = null!;
-        
+
+        public void CloneToSelf(City city)
+        {
+            this.Name = city.Name;
+            this.RegionId = city.RegionId;
+        }
+
     }
 }

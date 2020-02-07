@@ -15,6 +15,7 @@ namespace OD_Stat.DataAccess
         public OdContext(DbContextOptions<OdContext> options)
             : base(options)
         {
+            Database.Migrate();
             Database.EnsureCreated();
         }
 

@@ -40,7 +40,9 @@ namespace OD_Stat.Helpings
             
             // OTHERS
             services.AddDbContext<OdContext>(opt => 
-                opt.UseSqlite("Data Source=od_stat.db"));
+                opt.UseSqlite(SqliteConfigBuilder.GetConnection()),
+                ServiceLifetime.Transient);
+            
             services.AddTransient<IUnitOfWork, UnitOfWork>();    
             
             

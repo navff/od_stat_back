@@ -36,13 +36,12 @@ namespace OD_Stat.Modules.Geo.Countries
             return country;
         }
 
-        public async Task<Countries.Country> Update(Countries.Country city)
+        public async Task<Country> Update(Country country)
         {
-            var dbCountry = await GetById(city.Id);
-            dbCountry =  _mapper.Map<Countries.Country>(city);
-            dbCountry.Id = city.Id;
+            var resultCountry = await GetById(country.Id);
+            resultCountry.CloneToSelf(country);
             await _context.SaveChangesAsync();
-            return dbCountry;
+            return resultCountry;
         }
 
         public async Task Delete(int id)

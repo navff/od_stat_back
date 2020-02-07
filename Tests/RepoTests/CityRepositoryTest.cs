@@ -89,7 +89,8 @@ namespace Tests.RepoTests
             var result = await _unitOfWork.CityRepository.Update(new City
             {
                 Name = "updated_name",
-                Id = city.Id
+                Id = city.Id,
+                RegionId = city.RegionId
             });
             Assert.AreEqual(city.Id, result.Id);
             Assert.AreEqual("updated_name", result.Name);

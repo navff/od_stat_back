@@ -11,6 +11,12 @@ namespace OD_Stat.Modules.Geo.Regions
         [ForeignKey("Country")]
         public int CountryId { get; set; }
         public virtual Countries.Country Country { get; set; }
-        
+
+        public void CloneToSelf(Region region)
+        {
+            this.Code = region.Code;
+            this.Name = region.Name;
+            this.CountryId = region.CountryId;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Common;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OD_Stat.DataAccess;
@@ -27,8 +28,11 @@ namespace Tests
             services.AddTransient<CityController>();
             
             // OTHERS
-            services.AddDbContext<OdContext>(opt => 
-                opt.UseInMemoryDatabase("ODStat"));
+            
+            services.AddDbContext<OdContext>(options => 
+                    options.UseSqlite(SqliteConfigBuilder.GetConnection()),
+                    ServiceLifetime.Transient);
+            
             AutoMapperConigBuilder.RegisterAutoMapper(services, new MappingProfile());
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.Helpings;
@@ -53,6 +54,23 @@ namespace Tests.ControllerTests
             Assert.IsTrue(result.Id != 0);
             Assert.IsTrue(result.RegionId == region.Id);
             Assert.IsTrue(result.Name == "cityName");
+        }
+
+        [TestMethod]
+        public async Task Update_Ok_Test()
+        {
+            var city = await _creators.CityCreator.CreateOne();
+            var rndString = Guid.NewGuid().ToString();
+            var cityViewModel = new CityViewModelPost
+            {
+                Name = rndString,
+                RegionId = city.RegionId
+            };
+            var result = (await _controller.Update(city.Id, cityViewModel)).Cast<CityViewModelGet>();
+            Assert.IsTrue(result.Id != 0);
+            Assert.IsFalse(String.IsNullOrEmpty(result.RegionName));
+            Assert.AreEqual(rndString, result.Name);
+            Assert.IsTrue(result.RegionId != 0);
         }
     }
 }

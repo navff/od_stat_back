@@ -37,11 +37,10 @@ namespace OD_Stat.Modules.Geo.Cities
 
         public async  Task<City> Update(City city)
         {
-            var dbCity = await GetById(city.Id);
-            dbCity =  _mapper.Map<City>(city);
-            dbCity.Id = city.Id;
+            var resultCity = await GetById(city.Id);;
+            resultCity.CloneToSelf(city);
             await _context.SaveChangesAsync();
-            return dbCity;
+            return resultCity;
         }
 
         public async Task Delete(int id)
