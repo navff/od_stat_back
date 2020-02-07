@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common;
@@ -113,6 +114,23 @@ namespace OD_Stat.Modules.Geo.Cities
                 return NotFound($"There is no City with ID = {id}");
             }
             return await Get(result.Id);
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(void), 200)]
+        [Route("{id}")]
+        public async Task<ObjectResult> Delete(int id)
+        {
+            try
+            {
+                await _cityService.Delete(id);
+            }
+            catch (EntityNotFoundException<City>)
+            {
+                return NotFound($"There is no City with Id = {id}");
+;           }
+            return Ok("Deleted");
         }
     }
 }

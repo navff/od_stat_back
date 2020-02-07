@@ -72,5 +72,13 @@ namespace Tests.ControllerTests
             Assert.AreEqual(rndString, result.Name);
             Assert.IsTrue(result.RegionId != 0);
         }
+
+        [TestMethod]
+        public async Task Delete_Ok_Test()
+        {
+            var city = await _creators.CityCreator.CreateOne();
+            var result = (await _controller.Delete(city.Id)).Cast<string>();
+            Assert.AreEqual("Deleted", result);
+        }
     }
 }
