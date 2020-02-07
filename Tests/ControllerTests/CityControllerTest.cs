@@ -11,14 +11,13 @@ namespace Tests.ControllerTests
     [TestClass]
     public class CityControllerTest
     {
-        private DIServiceBuilder _diServiceBuilder;
-        private CityController _controller;
-        private Creators _creators;
+        private readonly CityController _controller;
+        private readonly Creators _creators;
 
         public CityControllerTest()
         {
-            _diServiceBuilder = new DIServiceBuilder();
-            _controller = _diServiceBuilder.GetService<CityController>();    
+            var diServiceBuilder = new DIServiceBuilder();
+            _controller = diServiceBuilder.GetService<CityController>();    
             _creators = new Creators();
         }
 
