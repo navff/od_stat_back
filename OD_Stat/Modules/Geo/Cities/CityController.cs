@@ -5,6 +5,7 @@ using AutoMapper;
 using Common;
 using Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using OD_Stat.Modules.CommonModulesHelpings;
 
 namespace OD_Stat.Modules.Geo.Cities
 {
@@ -52,6 +53,9 @@ namespace OD_Stat.Modules.Geo.Cities
             return Ok(result);
         }
 
+        
+
+
         /// <summary>
         /// Найти город по параметрам
         /// </summary>
@@ -59,7 +63,7 @@ namespace OD_Stat.Modules.Geo.Cities
         [Route("search")]
         [HttpGet]
         [ProducesResponseType(typeof(PageView<CityViewModelGet>), 200)]
-        public async Task<PageView<CityViewModelGet>> Search([FromQuery]CitySearchParams searchParams)
+        public async Task<PageView<CityViewModelGet>> Search([FromQuery]CitySearchParams searchParams) 
         {
             var cities = await _cityService.Search(searchParams);
             return new PageView<CityViewModelGet>

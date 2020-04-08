@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common;
@@ -49,7 +50,7 @@ namespace OD_Stat.Modules.Geo.Regions
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageView<Regions.Region>> Search(RegionSearchParams searchParams)
+        public async Task<PageView<Regions.Region>> Search([NotNull]RegionSearchParams searchParams)
         {
             var skip = HARDCODED_SETTINGS.ITEMS_PER_PAGE * (searchParams.Page - 1);
             var query = _context.Regions.AsQueryable();

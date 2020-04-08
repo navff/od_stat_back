@@ -6,10 +6,9 @@ namespace OD_Stat.Modules.CommonModulesHelpings
 {
     public interface ICrudOperations<T>
     {
-        
         Task<T> GetById(int id);
         Task<T> Add(T entity);
-        Task<T> Update(T city);
+        Task<T> Update(T entity);
         Task Delete(int id);
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Address
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string UnrestrictedValue { get; set; }
         
         public string CountryName { get; set; }

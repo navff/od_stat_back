@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common;
@@ -50,7 +51,7 @@ namespace OD_Stat.Modules.Geo.Cities
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageView<City>> Search(CitySearchParams searchParams)
+        public async Task<PageView<City>> Search([NotNull]CitySearchParams searchParams)
         {
             int skipCount = (searchParams.Page - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
 

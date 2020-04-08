@@ -6,19 +6,20 @@ namespace OD_Stat.Modules.Divisions
 {
     public class Division
     {
-        public string Id { get; set; }
-        public IEnumerable<Person> Persons { get; set; }
-        public Person Director { get; set; }
+        public int Id { get; set; }
+        public IEnumerable<User> Admins { get; set; }
+        public User Director { get; set; }
         public Address Address { get; set; }
         public Division ParentDivision { get; set; }
         public DivisionType DivisionType { get; set; }    
+        public string Name { get; set; }
     }
 
     public enum DivisionType
     {
         Area = 1,
         Region = 2,
-        Settlement = 3
+        City = 3
     }
     
 }
