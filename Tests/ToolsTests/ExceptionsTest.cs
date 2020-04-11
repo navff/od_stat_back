@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Common.Exceptions;
-using OD_Stat.Modules.Geo;
-using OD_Stat.Modules.Geo.Cities;
+using OD_Stat.Modules.Divisions;
 
 namespace Tests
 {
@@ -14,9 +13,9 @@ namespace Tests
         {
             try
             {
-                throw new EntityNotFoundException<City>(123.ToString());
+                throw new EntityNotFoundException<Division>(123.ToString());
             }
-            catch (EntityNotFoundException<City> e)
+            catch (EntityNotFoundException<Division> e)
             {
                 Assert.IsTrue(e.Message.Contains("123"));
             }

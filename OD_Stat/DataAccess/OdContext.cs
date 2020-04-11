@@ -1,17 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OD_Stat.Modules.Geo;
-using OD_Stat.Modules.Geo.Cities;
-using OD_Stat.Modules.Geo.Countries;
-using OD_Stat.Modules.Geo.Regions;
+using OD_Stat.Modules.Divisions;
+using OD_Stat.Modules.Geo.Addresses;
 
 namespace OD_Stat.DataAccess
 {
     public class OdContext : DbContext
     {
-        public DbSet<Region> Regions { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<City> Cities { get; set; }
-        
+        public DbSet<Division> Divisions { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public OdContext(DbContextOptions<OdContext> options)
             : base(options)
         {

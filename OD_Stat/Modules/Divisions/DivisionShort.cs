@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int DirectorId { get; set; }
-        public int DirectorName { get; set; }
+        public string DirectorName { get; set; }
         public string Address { get; set; }
         public int ParentDivisionId { get; set; }
         public DivisionType DivisionType { get; set; } 

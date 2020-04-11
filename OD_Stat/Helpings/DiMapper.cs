@@ -2,15 +2,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
-using AutoMapper;
 using Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using OD_Stat.DataAccess;
-using OD_Stat.Modules.Geo;
-using OD_Stat.Modules.Geo.Cities;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using OD_Stat.Modules.Divisions;
 
 namespace OD_Stat.Helpings
 {
@@ -21,7 +18,6 @@ namespace OD_Stat.Helpings
         {
             // SERVICES
             AutoMapperConigBuilder.RegisterAutoMapper(services, new MappingProfile());
-            services.AddTransient<ICityService, CityService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OD_Stat Api", Version = "v1" });
@@ -32,19 +28,19 @@ namespace OD_Stat.Helpings
                 
             });
             
+            // BUSINESS SERVICES
+            services.AddTransient<DivisionService>();
+            
             // REPOSITORIES
             
             
             // CONTROLLERS
-            services.AddTransient<CityController>();
+            services.AddTransient<DivisionsController>();
             
             // OTHERS
             services.AddDbContext<OdContext>(opt => 
                 opt.UseSqlite(SqliteConfigBuilder.GetConnection()),
                 ServiceLifetime.Transient);
-            
-            services.AddTransient<IUnitOfWork, UnitOfWork>();    
-            
             
         }
         

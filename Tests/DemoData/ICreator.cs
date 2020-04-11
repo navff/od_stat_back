@@ -7,6 +7,5 @@ namespace Tests.DemoData
     {
         public Task<T> CreateOne();
         public Task<IEnumerable<T>> CreateMany(int count);
-        
     }
 }

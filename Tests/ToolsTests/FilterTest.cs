@@ -1,12 +1,10 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.DataAccess;
-using OD_Stat.Modules.Geo;
-using OD_Stat.Modules.Geo.Countries;
+using OD_Stat.Modules.Divisions;
 
-namespace Tests
+namespace Tests.ToolsTests
 {
     [TestClass]
     public class FilterTest : BaseTest
@@ -21,9 +19,9 @@ namespace Tests
         {
             for (int i = 0; i < count; i++)
             {
-                _context.Countries.Add(new Country
+                _context.Divisions.Add(new Division
                 {
-                    Code = "ads",
+                    DivisionType = DivisionType.City,
                     Name = "sdfsf"
                 });
             }
@@ -33,9 +31,9 @@ namespace Tests
         public void PageViewTest()
         {
             PrepareData(123);
-            IQueryable<Country> query = _context.Countries.AsQueryable();
+            IQueryable<Division> query = _context.Divisions.AsQueryable();
             
-            var pageView = new PageView<Country>
+            var pageView = new PageView<Division>
             {
                 Items = query,
                 CurrentPage = 1

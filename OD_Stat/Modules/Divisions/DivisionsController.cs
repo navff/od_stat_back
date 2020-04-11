@@ -31,7 +31,7 @@ namespace OD_Stat.Modules.Divisions
             throw new System.NotImplementedException();
         }
 
-        public Task<ObjectResult> Put(DivisionViewModelPost viewModel)
+        public Task<ObjectResult> Put(int divisionId, DivisionViewModelPost viewModel)
         {
             throw new System.NotImplementedException();
         }

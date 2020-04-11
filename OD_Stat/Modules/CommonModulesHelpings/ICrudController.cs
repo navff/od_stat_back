@@ -11,7 +11,7 @@ namespace OD_Stat.Modules.CommonModulesHelpings
     {
         Task<ObjectResult> Get(int id);
         Task<ObjectResult> Post(T_ViewModelPost viewModel);
-        Task<ObjectResult> Put(T_ViewModelPost viewModel);
+        Task<ObjectResult> Put(int id, T_ViewModelPost viewModel);
         Task<ObjectResult> Delete(int id);
         Task<ObjectResult> Search(T_SearchParams searchParams);
     }

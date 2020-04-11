@@ -1,22 +1,21 @@
 ﻿using AutoMapper;
-using OD_Stat.Modules.Geo;
-using OD_Stat.Modules.Geo.Cities;
-using OD_Stat.Modules.Geo.Countries;
+using OD_Stat.Modules.Divisions;
 
 namespace OD_Stat.Helpings
 {
     public class MappingProfile : Profile {
         public MappingProfile() {
             // entities
-            CreateMap<Country, Country>();
+            CreateMap<Division, DivisionShort>();
             
             // ViewModel to Entities
-            CreateMap<CityViewModelGet, City>();
-            CreateMap<CityViewModelPost, City>();
+            CreateMap<DivisionViewModelPost, Division>();
+            CreateMap<DivisionViewModelGet, Division>();
 
 
             // Entities to viewModels
-            CreateMap<City, CityViewModelGet>();
+            CreateMap<Division, DivisionViewModelGet>();
+            CreateMap<Division, DivisionViewModelList>();
         }
     }
 }

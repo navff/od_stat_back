@@ -1,4 +1,6 @@
-﻿namespace OD_Stat.Modules.Geo.Addresses
+﻿using System;
+
+namespace OD_Stat.Modules.Geo.Addresses
 {
     public class Address
     {
@@ -16,5 +18,12 @@
 
         public string CityName { get; set; }
         public string CityFiasId { get; set; }
+        
+        public override string ToString()
+        {
+            return UnrestrictedValue;
+        }
     }
+    
+    
 }
