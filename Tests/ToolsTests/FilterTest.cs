@@ -3,6 +3,8 @@ using Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Divisions;
+using OD_Stat.Modules.Persons;
+using Tests.DemoData;
 
 namespace Tests.ToolsTests
 {
@@ -22,7 +24,13 @@ namespace Tests.ToolsTests
                 _context.Divisions.Add(new Division
                 {
                     DivisionType = DivisionType.City,
-                    Name = "sdfsf"
+                    Name = "sdfsf",
+                    Director = new User
+                    {
+                        Email = "director@user.ru",
+                        Name = "Director"
+                    },
+                    Address = AddressCreator.NewItem(),
                 });
             }
             _context.SaveChanges();

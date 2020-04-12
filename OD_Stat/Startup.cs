@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using OD_Stat.DataAccess;
 using OD_Stat.Helpings;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -49,7 +50,7 @@ namespace OD_Stat
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "OD Api V1");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "OD Api V1");
                 c.RoutePrefix = string.Empty;
                 c.EnableDeepLinking();
             });

@@ -19,7 +19,7 @@ namespace OD_Stat.Modules.Divisions
         public Address Address { get; set; }
         
         [ForeignKey("ParentDivision")]
-        public int ParentDivisionId { get; set; }
+        public int? ParentDivisionId { get; set; }
         public Division ParentDivision { get; set; }
         
         public DivisionType DivisionType { get; set; }    

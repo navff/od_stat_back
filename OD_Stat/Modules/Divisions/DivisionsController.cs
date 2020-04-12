@@ -8,8 +8,7 @@ namespace OD_Stat.Modules.Divisions
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
-    public class DivisionsController: ControllerBase, 
-        ICrudController<DivisionViewModelPost, DivisionSearchParams>
+    public class DivisionsController: ControllerBase
     {
         private DivisionService _divisionService;
         private IMapper _mapper;
@@ -20,12 +19,13 @@ namespace OD_Stat.Modules.Divisions
             _mapper = mapper;
         }
 
-
-        public Task<ObjectResult> Get(int id)
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ObjectResult> Get([FromRoute]int id)
         {
-            throw new System.NotImplementedException();
+            return Ok("nothing");
         }
-
+/*
         public Task<ObjectResult> Post(DivisionViewModelPost viewModel)
         {
             throw new System.NotImplementedException();
@@ -45,5 +45,6 @@ namespace OD_Stat.Modules.Divisions
         {
             throw new System.NotImplementedException();
         }
+        */
     }
 }
