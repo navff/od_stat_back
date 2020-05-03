@@ -6,16 +6,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.Helpings;
 using OD_Stat.Modules.Divisions;
 using Tests.DemoData;
+using Tests.ToolsTests;
 
 namespace Tests.ControllerTests
 {
     [TestClass]
-    public class CityControllerTest
+    public class DivisionsControllerTest
     {
         private readonly DivisionsController _controller;
         private readonly Creators _creators;
 
-        public CityControllerTest()
+        public DivisionsControllerTest()
         {
             var diServiceBuilder = new DIServiceBuilder();
             _controller = diServiceBuilder.GetService<DivisionsController>();    
@@ -23,7 +24,7 @@ namespace Tests.ControllerTests
         }
 
         [TestMethod]
-        public async Task  GetCity_Ok_Test()
+        public async Task  GetDivision_Ok_Test()
         {
             var division = await _creators.DivisionCreator.CreateOne();
             var result = (await _controller.Get(division.Id)).Cast<DivisionViewModelGet>();
@@ -45,12 +46,14 @@ namespace Tests.ControllerTests
         [TestMethod]
         public async Task Add_Ok_Test()
         {
-            var cityViewModel = new DivisionViewModelPost()
+            var divisionViewModel = new DivisionViewModelPost()
             {
                 Name = "divisonName",
-                FiasId = "fias_id"
+                FiasId = (await _creators.AddressCreator.CreateOne()).SettlementFiasId,
+                DivisionType = DivisionType.Area,
+                DirectorUserId = ( await _creators.UserCreator.CreateOne()).Id,
             };
-            var result = (await _controller.Post(cityViewModel))
+            var result = (await _controller.Post(divisionViewModel))
                 .Cast<DivisionViewModelGet>();
             Assert.IsTrue(result.Id != 0);
             Assert.IsTrue(result.Name == "divisonName");

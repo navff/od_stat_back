@@ -13,7 +13,7 @@ namespace Tests
         {
             try
             {
-                throw new EntityNotFoundException<Division>(123.ToString());
+                throw new EntityNotFoundException<Division>(123, "Всё плохо");
             }
             catch (EntityNotFoundException<Division> e)
             {

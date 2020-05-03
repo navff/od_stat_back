@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.Divisions;
 using OD_Stat.Modules.Geo.Addresses;
 using OD_Stat.Modules.Persons;

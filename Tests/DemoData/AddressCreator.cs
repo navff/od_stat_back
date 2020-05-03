@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OD_Stat.DataAccess;
+using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.Geo.Addresses;
 
 namespace Tests.DemoData
@@ -37,13 +38,13 @@ namespace Tests.DemoData
         {
             return new Address
             {
-                CityName = "city_name",
-                CountryName = "country_name",
-                RegionName = "region_name",
-                SettlementName = "settlement_name",
+                City = "city_name",
+                Country = "country_name",
+                Region = "region_name",
+                Settlement = "settlement_name",
                 UnrestrictedValue = "urestricted_value",
                 CityFiasId = "city_fias_id",
-                CountryFiasId = "country_fias_id",
+                FiasId = "fias_id",
                 RegionFiasId = "region_fias_id",
                 SettlementFiasId = "settlement_fias_id"
             };

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Common
 {
-    public static class AutoMapperConigBuilder
+    public static class AutoMapperConfigBuilder
     {
         public static void RegisterAutoMapper(IServiceCollection services, Profile profile)
         {
@@ -12,7 +12,7 @@ namespace Common
                 mc.AddProfile(profile);
             });
 
-            IMapper mapper = mappingConfig.CreateMapper();
+            var mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
         }
     }

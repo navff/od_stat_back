@@ -34,6 +34,7 @@ namespace OD_Stat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<IConfiguration>(Configuration);
             DiMapper.Map(services);
         }
 

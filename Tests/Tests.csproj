@@ -2,11 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-
+        <UserSecretsId>2cd58c05-a34e-4e7e-9fd1-b36fbc0e2fde</UserSecretsId>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0-preview.2.20159.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-preview.2.20159.4" />
@@ -20,6 +21,12 @@
     <ItemGroup>
       <ProjectReference Include="..\Common\Common.csproj" />
       <ProjectReference Include="..\OD_Stat\OD_Stat.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

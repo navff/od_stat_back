@@ -23,28 +23,38 @@ namespace OD_Stat.Modules.Divisions
         [Route("{id}")]
         public async Task<ObjectResult> Get([FromRoute]int id)
         {
-            return Ok("nothing");
-        }
-/*
-        public Task<ObjectResult> Post(DivisionViewModelPost viewModel)
-        {
-            throw new System.NotImplementedException();
+            var division = await _divisionService.Get(id);
+            return Ok(_mapper.Map<DivisionViewModelGet>(division));
         }
 
+        [HttpPost]
+        public async Task<ObjectResult> Post(DivisionViewModelPost viewModel)
+        {
+            var division = await _divisionService.Create(
+                viewModel.DirectorUserId,
+                viewModel.FiasId,
+                viewModel.DivisionType,
+                viewModel.Name,
+                viewModel.ParentDivisionId);
+            return await Get(division.Id);
+        }
+        
+        [HttpPut]
         public Task<ObjectResult> Put(int divisionId, DivisionViewModelPost viewModel)
         {
             throw new System.NotImplementedException();
         }
 
+        [HttpDelete]
         public Task<ObjectResult> Delete(int id)
         {
             throw new System.NotImplementedException();
         }
 
+        [HttpGet]
         public Task<ObjectResult> Search(DivisionSearchParams searchParams)
         {
             throw new System.NotImplementedException();
         }
-        */
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Tests
+﻿namespace Tests.SimpleTestClasses
 {
     public class TestService
     {

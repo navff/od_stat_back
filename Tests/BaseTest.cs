@@ -1,4 +1,6 @@
-﻿namespace Tests
+﻿using Tests.ToolsTests;
+
+namespace Tests
 {
     public class BaseTest
     {

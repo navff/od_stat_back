@@ -2,8 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-
-namespace Tests
+namespace Tests.ToolsTests
 {
     public class DIServiceBuilder
     {

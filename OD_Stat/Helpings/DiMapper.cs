@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using OD_Stat.DataAccess;
+using OD_Stat.Modules.DaData;
 using OD_Stat.Modules.Divisions;
 
 namespace OD_Stat.Helpings
@@ -17,7 +18,7 @@ namespace OD_Stat.Helpings
         public static void Map(IServiceCollection services)
         {
             // SERVICES
-            AutoMapperConigBuilder.RegisterAutoMapper(services, new MappingProfile());
+            AutoMapperConfigBuilder.RegisterAutoMapper(services, new MappingProfile());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OD_Stat Api", Version = "v1" });
@@ -30,10 +31,8 @@ namespace OD_Stat.Helpings
             
             // BUSINESS SERVICES
             services.AddTransient<DivisionService>();
-            
-            // REPOSITORIES
-            
-            
+            services.AddTransient<DaDataService>();
+
             // CONTROLLERS
             services.AddTransient<DivisionsController>();
             

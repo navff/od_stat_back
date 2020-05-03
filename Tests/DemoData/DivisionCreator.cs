@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Divisions;
+using OD_Stat.Modules.Persons;
 
 namespace Tests.DemoData
 {
@@ -40,7 +41,13 @@ namespace Tests.DemoData
             {
                 Name = "test_division",
                 Address = address,
-                Id = 0
+                Id = 0,
+                Director = new User()
+                {
+                    Email = "director@user.ru",
+                    Name = "Директор — собака"
+                },
+                DivisionType = DivisionType.City
             };
 
         }

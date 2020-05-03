@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.Geo.Addresses;
 using OD_Stat.Modules.Persons;
 
@@ -12,15 +13,15 @@ namespace OD_Stat.Modules.Divisions
         
         [ForeignKey("Director")]
         public int DirectorUserId { get; set; }
-        public User Director { get; set; }
+        public virtual User Director { get; set; }
         
         [ForeignKey("Address")]
         public int AddressId { get; set; }
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
         
         [ForeignKey("ParentDivision")]
         public int? ParentDivisionId { get; set; }
-        public Division ParentDivision { get; set; }
+        public virtual Division ParentDivision { get; set; }
         
         public DivisionType DivisionType { get; set; }    
         public string Name { get; set; }

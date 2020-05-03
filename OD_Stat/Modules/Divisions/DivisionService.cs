@@ -2,31 +2,63 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Common;
+using Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.CommonModulesHelpings;
+using OD_Stat.Modules.Persons;
 
 namespace OD_Stat.Modules.Divisions
 {
-    public class DivisionService: BaseCrudService<Division, DivisionShort, DivisionSearchParams>
+    public class DivisionService
     {
-        public DivisionService(OdContext context) : base(context)
+        private OdContext _context;
+        public DivisionService(OdContext context)
         {
+            this._context = context;
         }
 
-        public override async Task<Division> Get(int id)
+        public async Task<Division> Get(int id)
         {
-            return await _context.Divisions.FirstAsync(d => d.Id == id);
+            return await _context.Divisions.Include(d => d.Address)
+                .FirstAsync(d => d.Id == id);
         }
 
-        public override async Task<Division> Create(Division entity)
+        public async Task<Division> Create(int directorUseerId,
+                                                    string fiasId, 
+                                                    DivisionType divisionType, 
+                                                    string name,
+                                                    int? parentDivisionId)
         {
-            _context.Divisions.Add(entity);
+
+            var director = await GetAndCheckDirectorUser(directorUseerId);
+            // TODO: получить адрес из ФИАС, если его нет в локальной базе
+            var division = new Division()
+            {
+                DirectorUserId = director.Id,
+                Name = name,
+                AddressId = 212121, // TODO: настоящий адрес!
+                DivisionType = divisionType,
+                ParentDivisionId = parentDivisionId
+            };
+            _context.Divisions.Add(division);
             await _context.SaveChangesAsync();
-            return entity;
+            return division;
         }
 
-        public override async Task<Division> Update(Division entity)
+        private async Task<User> GetAndCheckDirectorUser(int directorUserId)
+        {
+            var director = await _context.Users.FirstOrDefaultAsync(u => u.Id == directorUserId);
+            if (director == null)
+            {
+                throw new EntityNotFoundException<User>(directorUserId, 
+                    "Cannot find DirectorUser for creating Division");
+            }
+
+            return director;
+        }
+
+        public async Task<Division> Update(Division entity)
         {
             var dbEntity = _context.Divisions.First(d => d.Id == entity.Id);
             dbEntity.AddressId = entity.AddressId;
@@ -39,23 +71,23 @@ namespace OD_Stat.Modules.Divisions
             return dbEntity;
         }
 
-        public override async Task Delete(int id)
+        public async Task Delete(int id)
         {
             var division = await _context.Divisions.FirstAsync(d => d.Id == id);
             _context.Divisions.Remove(division);
             await _context.SaveChangesAsync();
         }
 
-        public override async Task<PageView<DivisionShort>> Search(DivisionSearchParams searchParams)
+        public async Task<PageView<DivisionShort>> Search(DivisionSearchParams searchParams)
         {
             var query = _context.Divisions.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchParams.Word))
             {
                 var word = searchParams.Word.ToLower();
-                query = query.Where(d => d.Address.CityName.ToLower().Contains(word)
-                                    || d.Address.RegionName.ToLower().Contains(word)
-                                    || d.Address.SettlementName.ToLower().Contains(word)
+                query = query.Where(d => d.Address.City.ToLower().Contains(word)
+                                    || d.Address.Region.ToLower().Contains(word)
+                                    || d.Address.Settlement.ToLower().Contains(word)
                                     || d.Name.ToLower().Contains(word) );
             }
 
@@ -67,7 +99,7 @@ namespace OD_Stat.Modules.Divisions
             if (!string.IsNullOrEmpty(searchParams.FiasId))
             {
                 query = query.Where(d => d.Address.CityFiasId == searchParams.FiasId
-                                         || d.Address.CountryFiasId == searchParams.FiasId
+                                         || d.Address.FiasId == searchParams.FiasId
                                          || d.Address.RegionFiasId == searchParams.FiasId
                                          || d.Address.SettlementFiasId == searchParams.FiasId);
             }

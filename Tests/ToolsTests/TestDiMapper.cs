@@ -1,22 +1,31 @@
-﻿using Common;
-using Microsoft.Data.Sqlite;
+﻿using System.IO;
+using AutoMapper;
+using Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OD_Stat.DataAccess;
 using OD_Stat.Helpings;
+using OD_Stat.Modules.DaData;
 using OD_Stat.Modules.Divisions;
+using Tests.SimpleTestClasses;
 
-namespace Tests
+namespace Tests.ToolsTests
 {
     public static class TestDiMapper
     {
         public static void Map(IServiceCollection services)
         {
             // SERVICES
+            AutoMapperConfigBuilder.RegisterAutoMapper(services, new MappingProfile());
+
+            var configuration = ConfigHelper.GetIConfigurationRoot(Directory.GetCurrentDirectory());
+            services.AddSingleton<IConfiguration>(configuration);
             services.AddTransient<TestService>();
             services.AddTransient<InlineService>();
             services.AddTransient<DivisionService>();
-            
+            services.AddTransient<DaDataService>();
+
             // CONTROLLERS
             services.AddTransient<DivisionsController>();
             
@@ -26,7 +35,7 @@ namespace Tests
                     options.UseSqlite(SqliteConfigBuilder.GetConnection()),
                     ServiceLifetime.Transient);
             
-            AutoMapperConigBuilder.RegisterAutoMapper(services, new MappingProfile());
+            
         }
     }
 }
