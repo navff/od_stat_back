@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Common;
 using Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using OD_Stat.DataAccess;
-using OD_Stat.Modules.CommonModulesHelpings;
 using OD_Stat.Modules.Persons;
 
 namespace OD_Stat.Modules.Divisions

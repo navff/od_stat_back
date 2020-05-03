@@ -9,14 +9,61 @@ using OD_Stat.DataAccess;
 namespace OD_Stat.Migrations
 {
     [DbContext(typeof(OdContext))]
-    [Migration("20200412064125_InitialCreate")]
+    [Migration("20200503093739_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1");
+                .HasAnnotation("ProductVersion", "5.0.0-preview.2.20159.4");
+
+            modelBuilder.Entity("OD_Stat.Modules.Addresses.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CityFiasId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FiasId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RegionFiasId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Settlement")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SettlementFiasId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UnrestrictedValue")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
 
             modelBuilder.Entity("OD_Stat.Modules.Divisions.Division", b =>
                 {
@@ -51,53 +98,6 @@ namespace OD_Stat.Migrations
                     b.ToTable("Divisions");
                 });
 
-            modelBuilder.Entity("OD_Stat.Modules.Geo.Addresses.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CityFiasId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CountryFiasId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CountryName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RegionFiasId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RegionName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SettlementFiasId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SettlementName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UnrestrictedValue")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Addresses");
-                });
-
             modelBuilder.Entity("OD_Stat.Modules.Persons.User", b =>
                 {
                     b.Property<int>("Id")
@@ -124,7 +124,7 @@ namespace OD_Stat.Migrations
 
             modelBuilder.Entity("OD_Stat.Modules.Divisions.Division", b =>
                 {
-                    b.HasOne("OD_Stat.Modules.Geo.Addresses.Address", "Address")
+                    b.HasOne("OD_Stat.Modules.Addresses.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
