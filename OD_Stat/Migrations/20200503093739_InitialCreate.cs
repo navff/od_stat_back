@@ -12,14 +12,14 @@ namespace OD_Stat.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    FiasId = table.Column<string>(nullable: false),
                     UnrestrictedValue = table.Column<string>(nullable: false),
-                    CountryName = table.Column<string>(nullable: false),
-                    CountryFiasId = table.Column<string>(nullable: false),
-                    RegionName = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
+                    Region = table.Column<string>(nullable: false),
                     RegionFiasId = table.Column<string>(nullable: false),
-                    SettlementName = table.Column<string>(nullable: false),
+                    Settlement = table.Column<string>(nullable: false),
                     SettlementFiasId = table.Column<string>(nullable: false),
-                    CityName = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
                     CityFiasId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
