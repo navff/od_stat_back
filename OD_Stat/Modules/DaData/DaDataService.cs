@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Config;
@@ -17,9 +18,9 @@ namespace OD_Stat.Modules.DaData
         public DaDataService(IConfiguration configuration, IMapper mapper)
         {
             _mapper = mapper;
-            var dadataConfig = configuration.GetSection("DaData")
+            var daDataConfig = configuration.GetSection("DaData")
                 .Get<DaDataConfig>();
-            _apiClient = new ApiClient(dadataConfig.Token, dadataConfig.Secret);
+            _apiClient = new ApiClient(daDataConfig.Token, daDataConfig.Secret);
         }
 
         public async Task<List<Address>> GetAddressSuggestions(string word)
@@ -27,6 +28,13 @@ namespace OD_Stat.Modules.DaData
             var daDataSuggestions = await _apiClient.SuggestionsQueryAddress(word);
             var result = _mapper.Map<List<Address>>(daDataSuggestions.Suggestions);
             return result;
+        }
+        
+        public async Task<Address> GetAddressByFiasId(string word)
+        {
+            var daAddresses = await _apiClient.AdditionalQueryFindAddressById(word);
+            var result = _mapper.Map<List<Address>>(daAddresses.Suggestions);
+            return result.FirstOrDefault();
         }
 
 

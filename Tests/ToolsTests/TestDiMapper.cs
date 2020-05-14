@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OD_Stat.DataAccess;
 using OD_Stat.Helpings;
+using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.DaData;
 using OD_Stat.Modules.Divisions;
 using Tests.SimpleTestClasses;
@@ -19,11 +20,14 @@ namespace Tests.ToolsTests
             // SERVICES
             AutoMapperConfigBuilder.RegisterAutoMapper(services, new MappingProfile());
 
-            var configuration = ConfigHelper.GetIConfigurationRoot(Directory.GetCurrentDirectory());
-            services.AddSingleton<IConfiguration>(configuration);
+            // Test services
             services.AddTransient<TestService>();
             services.AddTransient<InlineService>();
+
+            var configuration = ConfigHelper.GetIConfigurationRoot(Directory.GetCurrentDirectory());
+            services.AddSingleton<IConfiguration>(configuration);
             services.AddTransient<DivisionService>();
+            services.AddTransient<AddressService>();
             services.AddTransient<DaDataService>();
 
             // CONTROLLERS
