@@ -7,13 +7,14 @@ using Microsoft.Extensions.Hosting;
 using OD_Stat.DataAccess;
 using OD_Stat.Modules.Geo;
 using Tests.SimpleTestClasses;
+using Xunit;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Tests
 {
-    [TestClass]
     public class DI_Container_Test : BaseTest
     {
-        [TestMethod]
+        [Fact]
         public void TestServiceBuilder()
         {
             var testService = DiServiceBuilder.GetService<TestService>();
@@ -21,7 +22,7 @@ namespace Tests
             Assert.IsTrue(result == "This is string");
         }
         
-        [TestMethod]
+        [Fact]
         public void TestAutoMapperDi()
         {
             var mapper = DiServiceBuilder.GetService<IMapper>();

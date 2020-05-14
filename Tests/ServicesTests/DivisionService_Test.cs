@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.Modules.Divisions;
 using Tests.DemoData;
 using Tests.ToolsTests;
+using Xunit;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Tests
 {
-    [TestClass]
     public class DivisionService_Test: BaseTest
     {
         private readonly Creators _creators;
@@ -18,7 +18,7 @@ namespace Tests
             _creators = new Creators();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetById_Ok_Test()
         {
             var division = await _creators.DivisionCreator.CreateOne();

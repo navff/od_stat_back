@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
 using OD_Stat.Modules.DaData;
+using Xunit;
 
 namespace Tests.ServicesTests
 {
-    [TestClass]
     public class DaDataService_Test : BaseTest
     {
         private DaDataService _daDataService;
@@ -14,11 +14,11 @@ namespace Tests.ServicesTests
             _daDataService = DiServiceBuilder.GetService<DaDataService>();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetData_Test()
         {
             var result = await _daDataService.GetAddressSuggestions("Шайма Вологодская 11");
-            Assert.IsTrue(result.Count > 0);
+            result.Should().HaveCount(c => c > 0);
         }
     }
 }
