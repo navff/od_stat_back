@@ -38,8 +38,6 @@ namespace Tests.ToolsTests
             services.AddDbContext<OdContext>(options => 
                     options.UseSqlite(SqliteConfigBuilder.GetConnection()),
                     ServiceLifetime.Transient);
-            
-            
         }
     }
 }
