@@ -1,7 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
+using Common;
+using Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.CommonModulesHelpings;
+using OD_Stat.Modules.Geo.Addresses;
 
 namespace OD_Stat.Modules.Divisions
 {
@@ -11,12 +16,17 @@ namespace OD_Stat.Modules.Divisions
     public class DivisionsController: ControllerBase
     {
         private DivisionService _divisionService;
+        private AddressService _addressService;
         private IMapper _mapper;
 
-        public DivisionsController(DivisionService divisionService, IMapper mapper) 
+        public DivisionsController(
+            DivisionService divisionService, 
+            IMapper mapper, 
+            AddressService addressService) 
         {
             _divisionService = divisionService;
             _mapper = mapper;
+            _addressService = addressService;
         }
 
         [HttpGet]
@@ -40,21 +50,46 @@ namespace OD_Stat.Modules.Divisions
         }
         
         [HttpPut]
-        public Task<ObjectResult> Put(int divisionId, DivisionViewModelPost viewModel)
+        public async Task<IActionResult> Put(int divisionId, DivisionViewModelPost viewModel)
         {
-            throw new System.NotImplementedException();
+            var division = _mapper.Map<Division>(viewModel);
+            var address = _addressService.GetByFiasId(viewModel.FiasId);
+            division.AddressId = address.Id;
+            division.Id = divisionId;
+            
+            try
+            {
+                var updatedDivision = await _divisionService.Update(division);
+                var result = _mapper.Map<DivisionViewModelGet>(updatedDivision);
+                return Ok(result);
+            }
+            catch (EntityNotFoundException<Division> e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpDelete]
-        public Task<ObjectResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                await _divisionService.Delete(id);
+                return Ok("Deleted");
+            }
+            catch (EntityNotFoundException<Division> e)
+            {
+                return NotFound(e.Message);
+            }
+            
         }
 
         [HttpGet]
-        public Task<ObjectResult> Search(DivisionSearchParams searchParams)
+        public async Task<ObjectResult> Search(DivisionBaseSearchParams baseSearchParams)
         {
-            throw new System.NotImplementedException();
+            var divisions = await _divisionService.Search(baseSearchParams);
+            var result = _mapper.Map<PageView<DivisionViewModelList>>(divisions);
+            return Ok(result);
         }
     }
 }

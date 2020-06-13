@@ -9,7 +9,7 @@
         
         public string Country { get; set; }
         
-        public string Region { get; set; }
+        public string RegionWithType { get; set; }
         public string RegionFiasId { get; set; }
         
         public string Settlement { get; set; }

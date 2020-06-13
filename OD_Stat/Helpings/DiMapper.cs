@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using OD_Stat.DataAccess;
+using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.DaData;
 using OD_Stat.Modules.Divisions;
 
@@ -32,6 +33,7 @@ namespace OD_Stat.Helpings
             // BUSINESS SERVICES
             services.AddTransient<DivisionService>();
             services.AddTransient<DaDataService>();
+            services.AddTransient<AddressService>();
 
             // CONTROLLERS
             services.AddTransient<DivisionsController>();

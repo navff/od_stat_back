@@ -15,7 +15,7 @@ namespace OD_Stat.Migrations
                     FiasId = table.Column<string>(nullable: false),
                     UnrestrictedValue = table.Column<string>(nullable: false),
                     Country = table.Column<string>(nullable: false),
-                    Region = table.Column<string>(nullable: false),
+                    RegionWithType = table.Column<string>(nullable: false),
                     RegionFiasId = table.Column<string>(nullable: false),
                     Settlement = table.Column<string>(nullable: false),
                     SettlementFiasId = table.Column<string>(nullable: false),

@@ -1,8 +1,10 @@
-﻿using OD_Stat.Modules.CommonModulesHelpings;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using OD_Stat.Modules.CommonModulesHelpings;
 
 namespace OD_Stat.Modules.Divisions
 {
-    public class DivisionSearchParams : ISearchParams
+    public class DivisionBaseSearchParams : BaseSearchParams
     {
         public string Word { get; set; }
         public int? AdminUserId { get; set; }
@@ -10,7 +12,5 @@ namespace OD_Stat.Modules.Divisions
         public string FiasId { get; set; }
         public int? ParentDivisionId { get; set; }
         public DivisionType? DivisionType { get; set; }
-        public int Page { get; set; }
-        public int Take { get; set; }
     }
 }

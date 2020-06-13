@@ -40,7 +40,7 @@ namespace Tests.ServicesTests
             {
                 City = "Жопа мира",
                 Country = "Пуп мира",
-                Region = "Замечательная область",
+                RegionWithType = "Замечательная область",
                 FiasId = "62f7b576-0ee7-4139-9ebd-7cc9dd70602b",
                 Settlement = "Деревня в Жопе мира",
                 UnrestrictedValue = "Анрестриктед валуе",

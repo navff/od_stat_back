@@ -38,15 +38,15 @@ namespace Tests.DemoData
         {
             return new Address
             {
-                City = "city_name",
-                Country = "country_name",
-                Region = "region_name",
-                Settlement = "settlement_name",
-                UnrestrictedValue = "urestricted_value",
-                CityFiasId = "city_fias_id",
-                FiasId = "fias_id",
-                RegionFiasId = "region_fias_id",
-                SettlementFiasId = "settlement_fias_id"
+                City = "",
+                Country = "Россия",
+                RegionWithType = "Вологодская обл",
+                Settlement = "Шайма",
+                UnrestrictedValue = "162642, Вологодская обл, Череповецкий р-н, деревня Шайма",
+                CityFiasId = "",
+                FiasId = "774f0a4c-ce21-4fa0-a3c6-3bf53a64a182",
+                RegionFiasId = "ed36085a-b2f5-454f-b9a9-1c9a678ee618",
+                SettlementFiasId = "774f0a4c-ce21-4fa0-a3c6-3bf53a64a182"
             };
         }
     }

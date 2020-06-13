@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Common;
 using Common.Exceptions;
@@ -28,8 +29,13 @@ namespace OD_Stat.Modules.Divisions
 
         public async Task<Division> Get(int id)
         {
-            return await _context.Divisions.Include(d => d.Address)
-                .FirstAsync(d => d.Id == id);
+            var result =  await _context.Divisions.Include(d => d.Address)
+                .FirstOrDefaultAsync(d => d.Id == id);
+            
+            if (result == null)
+                throw new EntityNotFoundException<Division>(id);
+
+            return result;
         }
 
         public async Task<Division> Create(int directorUseerId,
@@ -40,13 +46,13 @@ namespace OD_Stat.Modules.Divisions
         {
             var director = await GetAndCheckDirectorUser(directorUseerId);
             var fiasAddress = await _daDataService.GetAddressByFiasId(fiasId);
-            await _addressService.Create(fiasAddress);
+            fiasAddress = await _addressService.Create(fiasAddress);
             
             var division = new Division()
             {
                 DirectorUserId = director.Id,
                 Name = name,
-                AddressId = 212121, // TODO: настоящий адрес!
+                AddressId = fiasAddress.Id,
                 DivisionType = divisionType,
                 ParentDivisionId = parentDivisionId
             };
@@ -82,56 +88,59 @@ namespace OD_Stat.Modules.Divisions
 
         public async Task Delete(int id)
         {
-            var division = await _context.Divisions.FirstAsync(d => d.Id == id);
+            var division = await _context.Divisions.FirstOrDefaultAsync(d => d.Id == id);
+            if (division == null)
+                throw new EntityNotFoundException<Division>(id);
+            
             _context.Divisions.Remove(division);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageView<DivisionShort>> Search(DivisionSearchParams searchParams)
+        public async Task<PageView<DivisionShort>> Search(DivisionBaseSearchParams baseSearchParams)
         {
             var query = _context.Divisions.AsQueryable();
 
-            if (!string.IsNullOrEmpty(searchParams.Word))
+            if (!string.IsNullOrEmpty(baseSearchParams.Word))
             {
-                var word = searchParams.Word.ToLower();
+                var word = baseSearchParams.Word.ToLower();
                 query = query.Where(d => d.Address.City.ToLower().Contains(word)
-                                         || d.Address.Region.ToLower().Contains(word)
+                                         || d.Address.RegionWithType.ToLower().Contains(word)
                                          || d.Address.Settlement.ToLower().Contains(word)
                                          || d.Name.ToLower().Contains(word));
             }
 
-            if (searchParams.DivisionType.HasValue)
+            if (baseSearchParams.DivisionType.HasValue)
             {
-                query = query.Where(d => d.DivisionType == searchParams.DivisionType);
+                query = query.Where(d => d.DivisionType == baseSearchParams.DivisionType);
             }
 
-            if (!string.IsNullOrEmpty(searchParams.FiasId))
+            if (!string.IsNullOrEmpty(baseSearchParams.FiasId))
             {
-                query = query.Where(d => d.Address.CityFiasId == searchParams.FiasId
-                                         || d.Address.FiasId == searchParams.FiasId
-                                         || d.Address.RegionFiasId == searchParams.FiasId
-                                         || d.Address.SettlementFiasId == searchParams.FiasId);
+                query = query.Where(d => d.Address.CityFiasId == baseSearchParams.FiasId
+                                         || d.Address.FiasId == baseSearchParams.FiasId
+                                         || d.Address.RegionFiasId == baseSearchParams.FiasId
+                                         || d.Address.SettlementFiasId == baseSearchParams.FiasId);
             }
 
-            if (searchParams.AdminUserId.HasValue)
+            if (baseSearchParams.AdminUserId.HasValue)
             {
-                query = query.Where(d => d.Admins.Any(u => u.Id == searchParams.AdminUserId.Value));
+                query = query.Where(d => d.Admins.Any(u => u.Id == baseSearchParams.AdminUserId.Value));
             }
 
-            if (searchParams.DirectorUserId.HasValue)
+            if (baseSearchParams.DirectorUserId.HasValue)
             {
-                query = query.Where(d => d.Admins.Any(u => u.Id == searchParams.DirectorUserId.Value));
+                query = query.Where(d => d.Admins.Any(u => u.Id == baseSearchParams.DirectorUserId.Value));
             }
 
-            if (searchParams.ParentDivisionId.HasValue)
+            if (baseSearchParams.ParentDivisionId.HasValue)
             {
-                query = query.Where(d => d.ParentDivisionId == searchParams.ParentDivisionId.Value);
+                query = query.Where(d => d.ParentDivisionId == baseSearchParams.ParentDivisionId.Value);
             }
 
-            int skipCount = (searchParams.Page - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
+            int skipCount = (baseSearchParams.Page - 1) * HARDCODED_SETTINGS.ITEMS_PER_PAGE;
             query = query.OrderBy(d => d.Name)
                 .Skip(skipCount)
-                .Take(searchParams.Take);
+                .Take(baseSearchParams.Take);
 
             var pageView = new PageView<DivisionShort>
             {
@@ -145,7 +154,7 @@ namespace OD_Stat.Modules.Divisions
                     DivisionType = d.DivisionType,
                     ParentDivisionId = d.ParentDivisionId
                 }).ToListAsync(),
-                CurrentPage = searchParams.Page
+                CurrentPage = baseSearchParams.Page
             };
             return pageView;
         }
