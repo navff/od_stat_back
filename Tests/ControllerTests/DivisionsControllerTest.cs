@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Common;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OD_Stat.Helpings;
 using OD_Stat.Modules.Divisions;
 using Tests.DemoData;
@@ -52,7 +50,7 @@ namespace Tests.ControllerTests
         {
             var divisionViewModel = new DivisionViewModelPost()
             {
-                Name = "divisonName",
+                Name = "divisionName",
                 FiasId = (await _creators.AddressCreator.CreateOne()).SettlementFiasId,
                 DivisionType = DivisionType.Area,
                 DirectorUserId = ( await _creators.UserCreator.CreateOne()).Id,
@@ -60,7 +58,7 @@ namespace Tests.ControllerTests
             var result = (await _controller.Post(divisionViewModel))
                 .Cast<DivisionViewModelGet>();
             Assert.IsTrue(result.Id != 0);
-            Assert.IsTrue(result.Name == "divisonName");
+            Assert.IsTrue(result.Name == "divisionName");
         }
 
         [Fact]
@@ -79,8 +77,8 @@ namespace Tests.ControllerTests
             var result = (await _controller.Put(division.Id, divisionViewModel) as ObjectResult)
                 .Cast<DivisionViewModelGet>();
             Assert.IsTrue(result.Id != 0);
-            // Assert.AreEqual(rndString, result.Name);
-            // Assert.IsTrue(result.AddressId != 0);
+            Assert.AreEqual(rndString, result.Name);
+            Assert.IsTrue(result.AddressId != 0);
         }
 
         [Fact]
