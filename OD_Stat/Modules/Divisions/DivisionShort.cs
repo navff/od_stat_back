@@ -3,7 +3,7 @@
     public class DivisionShort
     {
         public int Id { get; set; }
-        public int DirectorId { get; set; }
+        public int DirectorUserId { get; set; }
         public string DirectorName { get; set; }
         public string Address { get; set; }
         public int? ParentDivisionId { get; set; }

@@ -9,5 +9,10 @@ namespace Common.Exceptions
             : base($"{typeof(T).Name} with Id={id} was not found. {message}")
         {
         }
+
+        public EntityNotFoundException(string id, string message = "")
+            : base($"{typeof(T).Name} with Id={id} was not found. {message}")
+        {
+        }
     }
 }

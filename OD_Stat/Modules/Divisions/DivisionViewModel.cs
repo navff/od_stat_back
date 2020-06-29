@@ -10,7 +10,7 @@ namespace OD_Stat.Modules.Divisions
         public int Id { get; set; }
         public IEnumerable<int> AdminsIds { get; set; }
         
-        public int DirectorUserId { get; set; }
+        public string DirectorUserId { get; set; }
         public string DirectorName { get; set; }
         
         public int AddressId { get; set; }
@@ -41,7 +41,7 @@ namespace OD_Stat.Modules.Divisions
     public class DivisionViewModelList
     {
         public int Id { get; set; }
-        public int DirectorId { get; set; }
+        public string DirectorId { get; set; }
         public string DirectorName { get; set; }
         public string Address { get; set; }
         public int ParentDivisionId { get; set; }

@@ -6,5 +6,6 @@ namespace Common.Config
     {
         public DaDataConfig DaDataConfig { get; set; }
         public Dictionary<string, string> ConnectionStrings { get; set; }
+        public AuthenticationConfig AuthenticationConfig {get; set;}
     }
 }

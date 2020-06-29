@@ -1,9 +1,9 @@
 ﻿namespace OD_Stat.Modules.Persons
 {
-    public class User
+    using Microsoft.AspNetCore.Identity;
+
+    public class User : IdentityUser<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
     }
 }

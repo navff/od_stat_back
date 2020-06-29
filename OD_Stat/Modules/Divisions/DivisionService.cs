@@ -13,9 +13,9 @@ namespace OD_Stat.Modules.Divisions
 {
     public class DivisionService
     {
-        private OdContext _context;
-        private DaDataService _daDataService;
-        private AddressService _addressService;
+        private readonly OdContext _context;
+        private readonly DaDataService _daDataService;
+        private readonly AddressService _addressService;
 
         public DivisionService(
             OdContext context,
@@ -38,13 +38,13 @@ namespace OD_Stat.Modules.Divisions
             return result;
         }
 
-        public async Task<Division> Create(int directorUseerId,
+        public async Task<Division> Create(int directorUserId,
             string fiasId,
             DivisionType divisionType,
             string name,
             int? parentDivisionId)
         {
-            var director = await GetAndCheckDirectorUser(directorUseerId);
+            var director = await GetAndCheckDirectorUser(directorUserId);
             var fiasAddress = await _daDataService.GetAddressByFiasId(fiasId);
             fiasAddress = await _addressService.Create(fiasAddress);
             
@@ -124,12 +124,12 @@ namespace OD_Stat.Modules.Divisions
 
             if (baseSearchParams.AdminUserId.HasValue)
             {
-                query = query.Where(d => d.Admins.Any(u => u.Id == baseSearchParams.AdminUserId.Value));
+                query = query.Where(d => d.Admins.Any(u => u.Id == baseSearchParams.AdminUserId));
             }
 
             if (baseSearchParams.DirectorUserId.HasValue)
             {
-                query = query.Where(d => d.Admins.Any(u => u.Id == baseSearchParams.DirectorUserId.Value));
+                query = query.Where(d => d.Admins.Any(u => u.Id == baseSearchParams.DirectorUserId));
             }
 
             if (baseSearchParams.ParentDivisionId.HasValue)
@@ -149,7 +149,7 @@ namespace OD_Stat.Modules.Divisions
                     Id = d.Id,
                     Address = d.Address.ToString(),
                     Name = d.Name,
-                    DirectorId = d.DirectorUserId,
+                    DirectorUserId = d.DirectorUserId,
                     DirectorName = d.Director.Name,
                     DivisionType = d.DivisionType,
                     ParentDivisionId = d.ParentDivisionId

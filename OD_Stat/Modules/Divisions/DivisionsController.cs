@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Common;
 using Common.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OD_Stat.Modules.Addresses;
 using OD_Stat.Modules.CommonModulesHelpings;
@@ -15,9 +16,9 @@ namespace OD_Stat.Modules.Divisions
     [Produces("application/json")]
     public class DivisionsController: ControllerBase
     {
-        private DivisionService _divisionService;
-        private AddressService _addressService;
-        private IMapper _mapper;
+        private readonly DivisionService _divisionService;
+        private readonly AddressService _addressService;
+        private readonly IMapper _mapper;
 
         public DivisionsController(
             DivisionService divisionService, 
@@ -85,6 +86,7 @@ namespace OD_Stat.Modules.Divisions
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ObjectResult> Search(DivisionBaseSearchParams baseSearchParams)
         {
             var divisions = await _divisionService.Search(baseSearchParams);
